@@ -1,0 +1,273 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>QUẢN LÝ</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="tab" *ngIf="tabModifyProductsActive">
+    <ion-card [formGroup]="formModify">
+      <ion-card-header>
+        <ion-title color="success">CHỈNH SỬA</ion-title>
+        <ion-icon name="close-outline" (click)="tabModifyProductsActive=false"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3">
+              <p>Hình ảnh</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                </ion-thumbnail>
+                <ion-label></ion-label>
+
+              </ion-item>
+              <ion-button>Chọn ảnh</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <p>Tên sản phẩm</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-input class="inputTabProduct" [(ngModel)]="this.contentCurrentModify.name" formControlName="nameProduct" type="text"></ion-input>
+
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <p>Số lượng</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-input class="inputTabProduct" [(ngModel)]="this.contentCurrentModify.count" formControlName="countProduct" type="number"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <p>Đơn giá</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-input class="inputTabProduct" [(ngModel)]="this.contentCurrentModify.price" formControlName="priceProduct" type="number"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col size="3">
+              <p>Mô tả</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-textarea class="inputTabProduct" [(ngModel)]="this.contentCurrentModify.description" formControlName="descriptionProduct" type="text" ></ion-textarea>
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col size="3">
+              <p>Loại sản phẩm</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-list>
+                <ion-item>
+                  <ion-select interface="action-sheet" placeholder="Chọn" class="inputTabProduct" [(ngModel)]="this.contentCurrentModify.type" formControlName="typeProduct">
+                    <div *ngFor="let title of categoriesTitle; index as i">
+                      <ion-select-option [value]="title" *ngIf="i>0">{{title}}</ion-select-option>
+                    </div>
+
+
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+        <div class="listButton">
+          <ion-button color="medium" (click)="tabModifyProductsActive=false">Hủy</ion-button>
+          <ion-button color="success" (click)="saveModifyProduct();tabModifyProductsActive=false;this.presentToast('Đã lưu thay đổi');" [disabled]="!formModify.valid">Lưu</ion-button>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div class="tab" *ngIf="tabAddCategoriesActive">
+    <ion-card >
+      <ion-card-header>
+        <ion-title color="success">THÊM DANH MỤC</ion-title>
+        <ion-icon name="close-outline" (click)="tabAddCategoriesActive=false"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+
+        <input type="text">
+
+        <div class="listButton">
+          <ion-button color="medium" (click)="tabAddCategoriesActive=false">Hủy</ion-button>
+          <ion-button color="success" (click)="addCategory();tabAddCategoriesActive=false;this.presentToast('Đã thêm 1 danh mục');">Thêm</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div class="tab" *ngIf="tabAddProductsActive">
+    <ion-card [formGroup]="formAdd">
+      <ion-card-header>
+        <ion-title color="success">THÊM SẢN PHẨM</ion-title>
+        <ion-icon name="close-outline" (click)="tabAddProductsActive=false"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3">
+              <p>Hình ảnh</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                </ion-thumbnail>
+                <ion-label></ion-label>
+
+              </ion-item>
+              <ion-button>Chọn ảnh</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <p>Tên sản phẩm</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-input class="inputTabProduct" formControlName="nameProduct" type="text"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <p>Số lượng</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-input class="inputTabProduct" formControlName="countProduct" type="number"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <p>Đơn giá</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-input class="inputTabProduct" formControlName="priceProduct" type="number"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col size="3">
+              <p>Mô tả</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-textarea class="inputTabProduct" formControlName="descriptionProduct" type="text"></ion-textarea>
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col size="3">
+              <p>Loại sản phẩm</p>
+            </ion-col>
+            <ion-col size="9">
+              <ion-list>
+                <ion-item>
+                  <ion-select interface="action-sheet" placeholder="Chọn" class="inputTabProduct" formControlName="typeProduct">
+                    <div *ngFor="let title of categoriesTitle; index as i">
+                      <ion-select-option [value]="title" *ngIf="i>0">{{title}}</ion-select-option>
+                    </div>
+
+
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+        <div class="listButton">
+          <ion-button color="medium" (click)="tabAddProductsActive=false">Hủy</ion-button>
+          <ion-button color="success" (click)="addProducts();tabAddProductsActive=false;this.presentToast('Thêm sản phẩm thành công');" [disabled]="!formAdd.valid">Thêm</ion-button>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div class="groupButton">
+    <ion-button color="success" (click)="tabAddCategoriesActive=true">
+  <ion-icon name="add-circle-outline"></ion-icon> THÊM DANH MỤC</ion-button>
+  <ion-button color="success" (click)="tabAddProductsActive=true">
+    <ion-icon name="add-circle-outline"></ion-icon> THÊM SẢN PHẨM</ion-button>
+  </div>
+
+  <ion-card>
+
+
+    <ion-card-content>
+      <div class="content">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3">
+              <ion-item-group>
+                <div class="search">
+                  <ion-icon name="search-outline"></ion-icon>
+                  <input type="text" placeholder="Tìm kiếm">
+                </div>
+                <ion-item-divider>
+                    <div class="header">
+                      <ion-label>
+                        DANH MỤC
+                      </ion-label>
+                      <ion-icon name="create-outline" (click)="clickModifyCategories()" size="large"></ion-icon>
+                    </div>
+
+
+                </ion-item-divider>
+                <div class="listItem" *ngFor="let title of this.categoriesTitle; index as i">
+                  <ion-item (click)="clickChoice(i)" >
+                    <ion-icon name="remove-circle-outline" *ngIf="modeDelete && i>0" (click)="clickDelete(i-1);presentToast('Đã xóa danh mục: '+title)"></ion-icon>
+                    <ion-label>{{title}}</ion-label>
+                    <ion-icon name="caret-back-outline" *ngIf="currentChoice===i&&!modeDelete" ></ion-icon>
+                  </ion-item>
+                </div>
+
+              </ion-item-group>
+            </ion-col>
+            <ion-col size="9">
+              <!-- <app-table [items]="products"></app-table> -->
+              <div class="table">
+                <ion-grid>
+                  <ion-row class="titleCol">
+                    <ion-col size="1">STT</ion-col>
+                    <ion-col size="1">Mã</ion-col>
+                    <ion-col size="3">Tên sản phẩm</ion-col>
+                    <ion-col size="2">Số lượng</ion-col>
+                    <ion-col size="2">Giá</ion-col>
+                    <ion-col size="2">Mô tả</ion-col>
+                    <ion-col size="1"></ion-col>
+                  </ion-row>
+                </ion-grid>
+                <ion-grid *ngFor="let ite of this.viewProducts;index as i">
+                  <ion-row >
+                    <ion-col size="1">{{i+1}}</ion-col>
+                    <ion-col size="1">{{ite.id}}</ion-col>
+                    <ion-col size="3">{{ite.name}}</ion-col>
+                    <ion-col size="2">{{ite.count}}</ion-col>
+                    <ion-col size="2">{{ite.price}}</ion-col>
+                    <ion-col size="2">{{ite.description}}</ion-col>
+                    <ion-col size="1" class="groupButton">
+                      <ion-icon name="create-outline" (click)="clickModifyProduct(i)"></ion-icon>
+                      <ion-icon name="remove-circle-outline" (click)="clickDeleteProduct(i);this.presentToast('Xóa thành công');"></ion-icon>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+
+
